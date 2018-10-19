@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Book a Doctor</string>
+    <string name="consult">Consult</string>
+    <string name="doctor_name">Dr. Ion Popescu</string>
+    <string name="medical_specialty">Oftalmologie</string>
+    <string name="location_address">Clinica Regina Maria, Splaiul Independentei 345, Sector 6</string>
+    <string name="date">15 Ianuarie 2018</string>
+    <string name="time">15:30</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
 </resources>
