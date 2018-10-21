@@ -1,19 +1,20 @@
-package com.example.pemil.bookadoctor
+package com.example.pemil.bookadoctor.Activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.pemil.bookadoctor.Adapters.AppointmentAdapter
 import com.example.pemil.bookadoctor.Models.Appointment
-import kotlinx.android.synthetic.main.activity_login.*
+import com.example.pemil.bookadoctor.R
+import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
 
-class LoginActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     lateinit var appointmentAdapter: AppointmentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.main_activity)
 
         var appointments: MutableList<Appointment> = mutableListOf()
         appointments.add(Appointment(time = "15:30"))

@@ -8,4 +8,8 @@
     <string name="time">15:30</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>
