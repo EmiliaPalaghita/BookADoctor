@@ -10,8 +10,36 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="signup">Sign up</string>
-    <string name="password">Password</string>
+
+    <!-- Strings in SignUp Activity -->
+    <string name="personal_data">Personal Information</string>
     <string name="full_name">Full Name</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="dob_format">DD/MM/YYYY</string>
+    <string name="sex">Sex</string>
+    <string name="address">Full address</string>
+    <string name="address_fields">Str., Nr., Bl., Fl., Ap., City, County</string>
+
+    <string name="ID_info">ID Information</string>
+    <string name="security_number">Social Security Number</string>
+    <string name="SSN_series">Series</string>
+    <string name="SSN_number">Number</string>
+
+    <string name="health_card_info">Health card information</string>
+    <string name="insurance_code">Insurance code</string>
+
+    <string name="account_info">Account Information</string>
+    <string name="username">Username</string>
     <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_confirm">Password Confirmation</string>
+
+    <string name="medic_checkbox">I am a doctor and I can prove if necessary through CMR.</string>
+    <string name="medic_info">Medic Information</string>
     <string name="specialty">Specialty</string>
+    <string name="health_clinic_name">Health clinic</string>
+    <string name="health_clinic_address">Health clinic address</string>
+
+    <string name="confirm">I agree that my data to be processed and used for my own benefits and just my own.</string>
+    <string name="terms_confirm">I agree with the term and conditions.</string>
 </resources>
