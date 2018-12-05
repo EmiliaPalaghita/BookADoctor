@@ -33,20 +33,27 @@
         app:layout_constraintTop_toBottomOf="@id/input_email" />
 
     <CheckBox
-        android:id="@+id/isPatient"
+        android:id="@+id/isDoctor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I am a doctor and I have proof (necessary to verify)"
-        app:layout_constraintTop_toBottomOf="@id/input_password"
-        />
+        app:layout_constraintTop_toBottomOf="@id/input_password" />
 
     <EditText
         android:id="@+id/input_specialty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:hint="@string/specialty"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/input_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/workplace"
+        android:inputType="text"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/register_button"
@@ -54,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="@string/signup"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
