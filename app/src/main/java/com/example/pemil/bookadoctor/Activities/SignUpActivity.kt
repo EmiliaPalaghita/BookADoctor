@@ -31,6 +31,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun registerNewUser() {
+
         val name = input_name.text.toString()
         val email = input_email.text.toString()
         val isDoctorBool = isDoctor.isPressed

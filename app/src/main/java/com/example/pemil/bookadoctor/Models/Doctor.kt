@@ -1,7 +1,17 @@
 package com.example.pemil.bookadoctor.Models
 
-data class Doctor(val name: String = "Ion Popescu",
+import java.util.*
+
+data class Doctor(val fullName: String = "default_name",
+                  val birthday: Date = Date(),
+                  val sex: String = "male",
+                  val address: String = "Strada Floarea Soarelui nr 5",
+                  val socialSecurityNumber: String = "1234567890123",
+                  val seriesNumber: String = "AB12345",
+                  val healthCardNumber: String = "1234567812345678",
+                  val username: String = "user",
                   val email: String = "test@test.com",
-                  val specialty: String = "Oftalmologie",
-                  val availableTimePeriods: List<String> = mutableListOf(),
-                  val locationAddress: String = "Strada Soarelui nr 5")
+                  val specialty: String = "cardiology",
+                  val healthClinicName: String = "Spitalul Universitar",
+                  val healthClinicAddress: String = "Bulevardul A nr 1"
+)

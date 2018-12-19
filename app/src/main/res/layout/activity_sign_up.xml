@@ -212,7 +212,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/security_number"
-                        android:inputType="number"
+                        android:inputType="text"
                         app:layout_constraintTop_toTopOf="parent" />
                 </LinearLayout>
 
@@ -330,7 +330,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/insurance_code"
-                        android:inputType="number"
+                        android:inputType="text"
                         app:layout_constraintTop_toTopOf="parent" />
                 </LinearLayout>
             </LinearLayout>
