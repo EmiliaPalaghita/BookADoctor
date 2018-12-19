@@ -3,4 +3,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="signupBlue">#4169e1</color>
+    <color name="white">#fffafa</color>
+
+    <!--Colors for appointments cards-->
+    <color name="bold_blue">#3284FF</color>
+    <color name="blue">#a4bdfc</color>
+    <color name="turquoise">#46d6db</color>
+    <color name="green">#7ae7bf</color>
+    <color name="bold_green">#51b749</color>
+    <color name="yellow">#FFD700</color>
+    <color name="orange">#FD9214</color>
+    <color name="red">#FF0000</color>
+    <color name="blod_red">#dc2127</color>
+    <color name="purple">#6611CC</color>
+    <color name="grey">#a0a0a0</color>
 </resources>
