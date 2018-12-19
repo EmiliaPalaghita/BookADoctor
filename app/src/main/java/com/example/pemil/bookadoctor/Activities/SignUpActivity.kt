@@ -6,8 +6,6 @@ import android.view.View
 import com.example.pemil.bookadoctor.Models.Doctor
 import com.example.pemil.bookadoctor.Models.Patient
 import com.example.pemil.bookadoctor.R
-import com.example.pemil.bookadoctor.R.id.input_specialty
-import com.example.pemil.bookadoctor.R.id.isDoctor
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
