@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.login_activity.*
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
@@ -55,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             val newIntent = Intent(this, MainActivity::class.java).apply {
-                putExtra("username", user.displayName)
             }
             startActivity(newIntent)
 

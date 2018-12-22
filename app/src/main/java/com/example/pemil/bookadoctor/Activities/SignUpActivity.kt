@@ -170,7 +170,6 @@ class SignUpActivity : AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             val newIntent = Intent(this, MainActivity::class.java).apply {
-                putExtra("username", user.displayName)
             }
             startActivity(newIntent)
         }
