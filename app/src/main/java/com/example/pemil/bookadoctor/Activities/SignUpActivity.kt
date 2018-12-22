@@ -1,5 +1,6 @@
 package com.example.pemil.bookadoctor.Activities
 
+import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,12 +12,21 @@ import android.widget.Toast
 import com.example.pemil.bookadoctor.Models.Doctor
 import com.example.pemil.bookadoctor.Models.Patient
 import com.example.pemil.bookadoctor.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class SignUpActivity : AppCompatActivity() {
+
+    private var auth = FirebaseAuth.getInstance()
+    private var database = FirebaseDatabase.getInstance()
+    private var patientDatabase = database.getReference("patients")
+    private var doctorDatabase = database.getReference("doctors")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,43 +100,79 @@ class SignUpActivity : AppCompatActivity() {
         val emptyInput = checkIfInputsEmpty()
 
         if (!emptyInput) {
-            val birthday = date_of_birth.text.toString()
-            val format = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
-            val birthdayDate = format.parse(birthday)
-
-            if (!isPatient.isChecked) {
-                val patient = Patient(input_name.text.toString(),
-                        birthdayDate,
-                        sex.text.toString(),
-                        address.text.toString(),
-                        ssn.text.toString(),
-                        series.text.toString() + ssn_number.text.toString(),
-                        health_card_number.text.toString(),
-                        username.text.toString(),
-                        input_email.text.toString()
-                )
-            } else {
-                val doctor = Doctor(input_name.text.toString(),
-                        birthdayDate,
-                        sex.text.toString(),
-                        address.text.toString(),
-                        ssn.text.toString(),
-                        series.text.toString() + ssn_number.text.toString(),
-                        health_card_number.text.toString(),
-                        username.text.toString(),
-                        input_email.text.toString(),
-                        input_speciality.text.toString(),
-                        health_clinic.text.toString(),
-                        health_clinic_address.text.toString())
-            }
 
             if (!agreesData.isChecked or !agreesTerms.isChecked) {
                 Toast.makeText(applicationContext,
                         "Please agree with data processing and with our terms",
                         Toast.LENGTH_LONG)
                         .show()
+            } else {
+                createAccount(input_email.text.toString(), password.text.toString())
             }
         }
 
+    }
+
+    private fun createAccount(email: String, password: String) {
+
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+
+                createUser(user?.uid!!)
+
+                updateUI(user)
+            } else {
+                Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                updateUI(null)
+            }
+        }
+    }
+
+    private fun createUser(uid: String) {
+        val birthday = date_of_birth.text.toString()
+        val format = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
+        val birthdayDate = format.parse(birthday)
+
+        if (!isPatient.isChecked) {
+            val patient = Patient(uid,
+                    input_name.text.toString(),
+                    birthdayDate,
+                    sex.text.toString(),
+                    address.text.toString(),
+                    ssn.text.toString(),
+                    series.text.toString() + ssn_number.text.toString(),
+                    health_card_number.text.toString(),
+                    username.text.toString(),
+                    input_email.text.toString())
+
+            patientDatabase.child(uid).setValue(patient)
+        } else {
+            val doctor = Doctor(uid,
+                    input_name.text.toString(),
+                    birthdayDate,
+                    sex.text.toString(),
+                    address.text.toString(),
+                    ssn.text.toString(),
+                    series.text.toString() + ssn_number.text.toString(),
+                    health_card_number.text.toString(),
+                    username.text.toString(),
+                    input_email.text.toString(),
+                    input_speciality.text.toString(),
+                    health_clinic.text.toString(),
+                    health_clinic_address.text.toString())
+
+            doctorDatabase.child(uid).setValue(doctor)
+        }
+    }
+
+    private fun updateUI(user: FirebaseUser?) {
+        if (user != null) {
+            val newIntent = Intent(this, MainActivity::class.java).apply {
+                putExtra("username", user.displayName)
+            }
+            startActivity(newIntent)
+        }
     }
 }

@@ -1,8 +1,9 @@
 package com.example.pemil.bookadoctor.Models
 
-import java.util.*
+import java.util.Date
 
-data class Doctor(val fullName: String = "default_name",
+data class Doctor(val uuid: String,
+                  val fullName: String = "default_name",
                   val birthday: Date = Date(),
                   val sex: String = "male",
                   val address: String = "Strada Floarea Soarelui nr 5",
