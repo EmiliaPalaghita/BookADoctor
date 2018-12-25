@@ -10,9 +10,11 @@
         android:id="@+id/appointmentsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:divider="@android:color/transparent"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_appointment" />
 
     <LinearLayout
