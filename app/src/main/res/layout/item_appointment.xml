@@ -26,7 +26,7 @@
                 android:paddingBottom="15dp"
                 android:id="@+id/cardTopPart"
                 android:orientation="horizontal"
-                android:background="@color/bold_blue"
+                android:background="@color/colorAccent"
                 android:gravity="center_vertical|center">
 
                 <TextView
@@ -36,13 +36,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/consult"
-                    android:textSize="40sp"
-                    android:textColor="@color/white"
-                    android:background="@drawable/back"
-                    android:paddingStart="90dp"
-                    android:paddingEnd="90dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp" />
+                    android:textSize="30dp"
+                    android:fontFamily="@font/quick_sans_bold"
+                    android:textColor="@color/white"/>
             </LinearLayout>
 
             <!-- Doctor and spec -->
@@ -68,9 +64,9 @@
                         android:text="@string/doctor_name"
                         android:textSize="20sp"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:paddingStart="10dp"
-                        android:paddingEnd="10dp"/>
+                        android:paddingEnd="10dp"
+                        android:fontFamily="@font/quick_sans_bold"/>
                 </LinearLayout>
 
                 <!-- Spec -->
@@ -92,7 +88,7 @@
                         android:text="@string/medical_specialty"
                         android:textColor="@color/white"
                         android:textSize="17sp"
-                        android:textStyle="italic" />
+                        android:fontFamily="@font/quick_sans_bold" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -109,7 +105,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:textSize="15sp"
-                    android:textStyle="italic"
+                    android:fontFamily="@font/quick_sans_light"
                     android:text="@string/location_address"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"/>
@@ -131,7 +127,8 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/date"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/quick_sans_light"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp"/>
                     </LinearLayout>
@@ -150,7 +147,8 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/time"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/quick_sans_light"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"/>
                     </LinearLayout>
