@@ -15,31 +15,67 @@
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_appointment" />
+        tools:listitem="@layout/appointment_item" />
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/black">
 
-        <Button
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/profileIB"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:text="@string/profile"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_profile"/>
 
-        <Button
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/appointmentsIB"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="@string/logout"
-            android:backgroundTint="@color/colorPrimary"/>
-    </LinearLayout>
+            android:adjustViewBounds="true"
+            android:background="@color/black"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.541"
+            app:layout_constraintStart_toEndOf="@+id/profileIB"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_list"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_add"
+        app:layout_anchor="@id/appointmentsListView"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.919"
+        app:backgroundTint="@color/black"/>
 
 </android.support.constraint.ConstraintLayout>

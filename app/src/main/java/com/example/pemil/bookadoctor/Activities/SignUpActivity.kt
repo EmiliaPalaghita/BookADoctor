@@ -15,7 +15,7 @@ import com.example.pemil.bookadoctor.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.sign_up_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,7 +30,7 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.sign_up_activity)
 
         register_button.setOnClickListener {
             registerNewUser()
