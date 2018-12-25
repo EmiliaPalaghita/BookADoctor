@@ -76,7 +76,6 @@ class SignUpActivity : AppCompatActivity() {
     private fun checkIfInputsEmpty(): Boolean {
         val basicInput = isEmpty(input_name) &&
                 isEmpty(date_of_birth) &&
-                isEmpty(sex) &&
                 isEmpty(address) &&
                 isEmpty(ssn) &&
                 isEmpty(series) &&
@@ -139,7 +138,7 @@ class SignUpActivity : AppCompatActivity() {
             val patient = Patient(uid,
                     input_name.text.toString(),
                     birthdayDate,
-                    sex.text.toString(),
+                    sex.selectedItem.toString(),
                     address.text.toString(),
                     ssn.text.toString(),
                     series.text.toString() + ssn_number.text.toString(),
@@ -152,7 +151,7 @@ class SignUpActivity : AppCompatActivity() {
             val doctor = Doctor(uid,
                     input_name.text.toString(),
                     birthdayDate,
-                    sex.text.toString(),
+                    sex.selectedItem.toString(),
                     address.text.toString(),
                     ssn.text.toString(),
                     series.text.toString() + ssn_number.text.toString(),
