@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <!-- Type layout -->
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:paddingBottom="15dp"
@@ -35,11 +35,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/consult"
-                    android:textSize="30dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:fontFamily="@font/quick_sans_bold"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
+                    android:text="@string/consult"
+                    android:textColor="@color/white"
+                    android:textSize="30dp"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_cancel"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone"/>
+            </android.support.constraint.ConstraintLayout>
 
             <!-- Doctor and spec -->
             <LinearLayout
