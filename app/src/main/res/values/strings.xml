@@ -36,10 +36,19 @@
 
     <string name="medic_checkbox">I am a doctor and I can prove if necessary through CMR.</string>
     <string name="medic_info">Medic Information</string>
-    <string name="specialty">Specialty</string>
+    <string name="specialty">Specialization</string>
     <string name="health_clinic_name">Health clinic</string>
     <string name="health_clinic_address">Health clinic address</string>
 
     <string name="confirm">I agree that my data to be processed and used for my own benefits and just my own.</string>
     <string name="terms_confirm">I agree with the term and conditions.</string>
+
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">New Appointment</string>
+    <string name="doctor">Doctor</string>
+    <string name="date_picker">Date</string>
+    <string name="time_picker">Time</string>
+    <string name="center">Health Center</string>
+    <string name="obs">Observations</string>
 </resources>
