@@ -58,7 +58,8 @@
             app:layout_constraintHorizontal_bias="0.541"
             app:layout_constraintStart_toEndOf="@+id/profileIB"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_list"/>
+            android:src="@drawable/ic_list"
+            android:tint="@color/colorAccent"/>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.FloatingActionButton

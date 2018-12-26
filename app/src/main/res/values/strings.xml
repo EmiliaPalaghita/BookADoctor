@@ -20,6 +20,8 @@
     <string name="sex">Sex</string>
     <string name="address">Full address</string>
     <string name="address_fields">Str., Nr., Bl., Fl., Ap., City, County</string>
+    <string name="phone">Phone</string>
+    <string name="random_phone">+040788320948</string>
 
     <string name="ID_info">ID Information</string>
     <string name="security_number">Social Security Number</string>
@@ -44,8 +46,12 @@
     <string name="confirm">I agree that my data to be processed and used for my own benefits and just my own.</string>
     <string name="terms_confirm">I agree with the term and conditions.</string>
 
+    <!--Edit + cancel + save-->
     <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+    <!--Appointment data-->
     <string name="add">New Appointment</string>
     <string name="doctor">Doctor</string>
     <string name="date_picker">Date</string>
@@ -54,5 +60,9 @@
     <string name="obs">Observations</string>
     <string name="spec_name">Some specialization name</string>
 
+    <!--Profile-->
+    <string name="my_profile">My profile</string>
+
+    <!--Dummy-->
     <string name="random_string">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 </resources>
