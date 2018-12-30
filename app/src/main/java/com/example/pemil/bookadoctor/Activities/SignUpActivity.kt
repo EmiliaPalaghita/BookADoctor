@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import com.example.pemil.bookadoctor.Models.Doctor
@@ -34,6 +35,17 @@ class SignUpActivity : AppCompatActivity() {
 
         register_button.setOnClickListener {
             registerNewUser()
+        }
+
+        ArrayAdapter.createFromResource(
+                this,
+                R.array.sex_array,
+                android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            sex.adapter = adapter
         }
 
         password_confirm.addTextChangedListener(object : TextWatcher {
