@@ -1,7 +1,9 @@
 package com.example.pemil.bookadoctor.Activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.example.pemil.bookadoctor.Adapters.AppointmentAdapter
 import com.example.pemil.bookadoctor.Models.Appointment
 import com.example.pemil.bookadoctor.R
@@ -16,6 +18,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+        createDummyData()
+
+        profileIB.setOnClickListener { openProfileActivity() }
+
+        (add_appointment as View).setOnClickListener { openNewAppointmentActivity() }
+
+    }
+
+    private fun openNewAppointmentActivity() {
+        val intent = Intent(applicationContext, AppointmentActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun openProfileActivity() {
+        val intent = Intent(applicationContext, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun createDummyData() {
         var appointments: MutableList<Appointment> = mutableListOf()
         appointments.add(Appointment(time = "15:30"))
         appointments.add(Appointment(time = "12:30"))
@@ -43,7 +64,5 @@ class MainActivity : AppCompatActivity() {
 
         appointmentAdapter = AppointmentAdapter(this, appointments)
         appointmentsListView.adapter = appointmentAdapter
-
-        //TODO de ce nu apare by default textul in Design?! test it on phone
     }
 }
