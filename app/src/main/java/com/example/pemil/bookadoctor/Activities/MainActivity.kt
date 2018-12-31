@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        createDummyData()
+//        createDummyData()
 
         profileIB.setOnClickListener { openProfileActivity() }
 
@@ -123,4 +123,6 @@ class MainActivity : AppCompatActivity() {
         appointmentAdapter = AppointmentAdapter(this, appointments)
         appointmentsListView.adapter = appointmentAdapter
     }
+
+    override fun onBackPressed() {}
 }
