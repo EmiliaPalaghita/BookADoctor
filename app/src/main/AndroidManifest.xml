@@ -21,6 +21,7 @@
         <activity android:name=".Activities.SignUpActivity" />
         <activity android:name=".Activities.AppointmentActivity" />
         <activity android:name=".Activities.ProfileActivity" />
+        <activity android:name=".Activities.SpecializationActivity"/>
     </application>
 
 </manifest>
