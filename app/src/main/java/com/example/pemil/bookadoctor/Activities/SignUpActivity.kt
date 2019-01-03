@@ -142,14 +142,11 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun createUser(uid: String) {
-        val birthday = date_of_birth.text.toString()
-        val format = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
-        val birthdayDate = format.parse(birthday)
 
         if (!isPatient.isChecked) {
             val patient = Patient(uid,
                     input_name.text.toString(),
-                    birthdayDate,
+                    date_of_birth.text.toString(),
                     sex.selectedItem.toString(),
                     address.text.toString(),
                     ssn.text.toString(),
@@ -162,7 +159,7 @@ class SignUpActivity : AppCompatActivity() {
         } else {
             val doctor = Doctor(uid,
                     input_name.text.toString(),
-                    birthdayDate,
+                    date_of_birth.text.toString(),
                     sex.selectedItem.toString(),
                     address.text.toString(),
                     ssn.text.toString(),
