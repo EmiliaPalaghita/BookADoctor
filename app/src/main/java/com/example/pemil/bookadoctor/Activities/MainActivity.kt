@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         updateUI(currentUser)
 
         //TODO - create add appointment
-        //TODO - make Date as String (perhaps it is better)
         //TODO - generate unique ID for each appointment for a patient, so that patient's uid will have a list of id's each representing an appointment
     }
 
@@ -99,17 +98,17 @@ class MainActivity : AppCompatActivity() {
         appointments.add(Appointment(time = "15:30"))
         appointments.add(Appointment(time = "12:30"))
         appointments.add(Appointment(doctorName = "Dr. George Jmen",
-                date = GregorianCalendar(2017, Calendar.MARCH, 15).time,
+                date = GregorianCalendar(2017, Calendar.MARCH, 15).time.toString(),
                 time = "12:00",
                 locationName = "Splaiul Indepententei 124, Sector 4",
                 specialty = "Cardiologie"))
         appointments.add(Appointment(doctorName = "Dr. George Jmen2",
-                date = GregorianCalendar(2017, Calendar.MARCH, 15).time,
+                date = GregorianCalendar(2017, Calendar.MARCH, 15).time.toString(),
                 time = "12:00",
                 locationName = "Splaiul Indepententei 124, Sector 4",
                 specialty = "Cardiologie"))
         appointments.add(Appointment(doctorName = "Dr. George Jmen3",
-                date = GregorianCalendar(2017, Calendar.MARCH, 15).time,
+                date = GregorianCalendar(2017, Calendar.MARCH, 15).time.toString(),
                 time = "12:00",
                 locationName = "Splaiul Indepententei 124, Sector 4",
                 specialty = "Cardiologie"))
