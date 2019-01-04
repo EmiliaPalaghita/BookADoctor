@@ -21,6 +21,7 @@ class AppointmentActivity : AppCompatActivity() {
     private var database = FirebaseDatabase.getInstance()
     var specialtiesReference = database.getReference("specialties")
     var doctorsReference = database.getReference("doctors")
+    var clinicsReference = database.getReference("health-clinics")
 
     var specialtiesList = mutableListOf<String>()
     var doctorsList = mutableListOf<String>()
@@ -62,6 +63,27 @@ class AppointmentActivity : AppCompatActivity() {
     private fun retrieveDataFromDB() {
         updateSpecialization()
         updateDoctor()
+        updateClinics()
+    }
+
+    private fun updateClinics() {
+        clinicsReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(this@AppointmentActivity, "Failed to load data", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for (data in p0.children) {
+                    val clinic = data.getValue(String::class.java)
+                    healthClinicList.add(clinic!!)
+                }
+
+                health_center_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
+                        android.R.layout.simple_spinner_item, healthClinicList).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+            }
+        })
     }
 
     private fun updateDoctor() {
