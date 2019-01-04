@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.pemil.bookadoctor.Models.Doctor
@@ -44,6 +45,18 @@ class AppointmentActivity : AppCompatActivity() {
 
         spec_info_ib.setOnClickListener { openSpecializationDetails() }
 
+        specialization_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position != 0) {
+                    filterSpinnersForSpecialization(position)
+                }
+            }
+        }
+
 
         specialtiesList.add(DEFAULT_VALUE)
         doctorsList.add(DEFAULT_VALUE)
@@ -53,6 +66,32 @@ class AppointmentActivity : AppCompatActivity() {
         //TODO - apeleaza metoda asta doar in onCreate si onStart. cand se modifica un element se face filter pe liste si se copiaza rezultatul in adapter
         retrieveDataFromDB()
 
+    }
+
+    private fun filterSpinnersForSpecialization(position: Int) {
+        val selectedSpecialization = specialtiesList[position]
+
+        val selectedDoctors = mutableListOf<String>()
+        selectedDoctors.add(DEFAULT_VALUE)
+        selectedDoctors.addAll(doctorsMap
+                .filter { it.value.specialty == selectedSpecialization }
+                .values.map { it -> it.fullName }.toMutableList()
+        )
+
+        doctor_name_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
+                android.R.layout.simple_spinner_item, selectedDoctors).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+
+        val selectedClinics = mutableListOf<String>()
+        selectedClinics.add(DEFAULT_VALUE)
+        selectedClinics.addAll(doctorsMap.filter { it.value.specialty == selectedSpecialization }
+                .values.map { it -> it.healthClinicName + ", " + it.healthClinicAddress }.toMutableList())
+
+        health_center_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
+                android.R.layout.simple_spinner_item, selectedClinics).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
     }
 
     private fun openSpecializationDetails() {
