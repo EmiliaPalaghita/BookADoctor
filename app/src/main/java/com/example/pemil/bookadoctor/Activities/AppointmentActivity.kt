@@ -45,6 +45,10 @@ class AppointmentActivity : AppCompatActivity() {
 
         spec_info_ib.setOnClickListener { openSpecializationDetails() }
 
+        specialtiesList.add(DEFAULT_VALUE)
+        doctorsList.add(DEFAULT_VALUE)
+        healthClinicList.add(DEFAULT_VALUE)
+
         specialization_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -53,19 +57,40 @@ class AppointmentActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position != 0) {
                     filterSpinnersForSpecialization(position)
+                } else {
+                    updateDoctorsAdapter(doctorsList)
+                    updateHealthClinicAdapter(healthClinicList)
                 }
             }
         }
 
-
-        specialtiesList.add(DEFAULT_VALUE)
-        doctorsList.add(DEFAULT_VALUE)
-        healthClinicList.add(DEFAULT_VALUE)
-
-
-        //TODO - apeleaza metoda asta doar in onCreate si onStart. cand se modifica un element se face filter pe liste si se copiaza rezultatul in adapter
         retrieveDataFromDB()
 
+    }
+
+    private fun updateSpecializationAdapter(specList: List<String>) {
+        specialization_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
+                android.R.layout.simple_spinner_item, specList).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+    }
+
+    private fun updateDoctorsAdapter(doctorList: List<String>) {
+        doctor_name_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
+                android.R.layout.simple_spinner_item, doctorList).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+    }
+
+    private fun updateHealthClinicAdapter(clinicList: List<String>) {
+        health_center_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
+                android.R.layout.simple_spinner_item, clinicList).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+    }
+
+    private fun displayFirebaseError() {
+        Toast.makeText(this@AppointmentActivity, "Failed to load data", Toast.LENGTH_LONG).show()
     }
 
     private fun filterSpinnersForSpecialization(position: Int) {
@@ -78,20 +103,14 @@ class AppointmentActivity : AppCompatActivity() {
                 .values.map { it -> it.fullName }.toMutableList()
         )
 
-        doctor_name_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
-                android.R.layout.simple_spinner_item, selectedDoctors).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
+        updateDoctorsAdapter(selectedDoctors)
 
         val selectedClinics = mutableListOf<String>()
         selectedClinics.add(DEFAULT_VALUE)
         selectedClinics.addAll(doctorsMap.filter { it.value.specialty == selectedSpecialization }
                 .values.map { it -> it.healthClinicName + ", " + it.healthClinicAddress }.toMutableList())
 
-        health_center_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
-                android.R.layout.simple_spinner_item, selectedClinics).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
+        updateHealthClinicAdapter(selectedClinics)
     }
 
     private fun openSpecializationDetails() {
@@ -108,7 +127,7 @@ class AppointmentActivity : AppCompatActivity() {
     private fun updateClinics() {
         clinicsReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(this@AppointmentActivity, "Failed to load data", Toast.LENGTH_LONG).show()
+                displayFirebaseError()
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -117,10 +136,7 @@ class AppointmentActivity : AppCompatActivity() {
                     healthClinicList.add(clinic!!)
                 }
 
-                health_center_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
-                        android.R.layout.simple_spinner_item, healthClinicList).apply {
-                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                }
+                updateHealthClinicAdapter(healthClinicList)
             }
         })
     }
@@ -128,7 +144,7 @@ class AppointmentActivity : AppCompatActivity() {
     private fun updateDoctor() {
         doctorsReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(this@AppointmentActivity, "Failed to load data", Toast.LENGTH_LONG).show()
+                displayFirebaseError()
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -137,10 +153,7 @@ class AppointmentActivity : AppCompatActivity() {
                     doctorsList.add(doctor!!.fullName)
                     doctorsMap[doctor.fullName] = doctor
 
-                    doctor_name_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
-                            android.R.layout.simple_spinner_item, doctorsList).apply {
-                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    }
+                    updateDoctorsAdapter(doctorsList)
                 }
             }
         })
@@ -149,7 +162,7 @@ class AppointmentActivity : AppCompatActivity() {
     private fun updateSpecialization() {
         specialtiesReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(this@AppointmentActivity, "Failed to load data", Toast.LENGTH_LONG).show()
+                displayFirebaseError()
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -158,16 +171,13 @@ class AppointmentActivity : AppCompatActivity() {
                     specialtiesList.add(specialtyName!!)
                 }
 
-                specialization_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
-                        android.R.layout.simple_spinner_item, specialtiesList).apply {
-                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                }
+                updateSpecializationAdapter(specialtiesList)
             }
         })
     }
 
     private fun saveAppointment() {
-
+        // TODO
     }
 
     private fun goBackWithoutSaving() {
