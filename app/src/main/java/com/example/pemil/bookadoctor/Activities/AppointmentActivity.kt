@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.appointment_activity.*
+import java.util.stream.IntStream
 
 
 class AppointmentActivity : AppCompatActivity() {
@@ -28,6 +29,8 @@ class AppointmentActivity : AppCompatActivity() {
     var doctorsList = mutableListOf<String>()
     var doctorsMap = mutableMapOf<String, Doctor>()
     var healthClinicList = mutableListOf<String>()
+
+    var isDoctorSelected = false
 
     companion object {
         const val DEFAULT_VALUE = "Choose an option"
@@ -55,16 +58,53 @@ class AppointmentActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position != 0) {
-                    filterSpinnersForSpecialization(position)
+                if (!isDoctorSelected) {
+                    if (position != 0) {
+                        filterSpinnersForSpecialization(position)
+                    } else {
+                        updateDoctorsAdapter(doctorsList)
+                        updateHealthClinicAdapter(healthClinicList)
+                    }
                 } else {
-                    updateDoctorsAdapter(doctorsList)
-                    updateHealthClinicAdapter(healthClinicList)
+                    isDoctorSelected = false
+                }
+            }
+        }
+
+        doctor_name_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position != 0) {
+                    filterSpinnersForDoctor(position)
+                    isDoctorSelected = true
                 }
             }
         }
 
         retrieveDataFromDB()
+
+    }
+
+    private fun filterSpinnersForDoctor(position: Int) {
+        val doctorName = doctorsList[position]
+        val doctor = doctorsMap[doctorName]
+
+        val indexOfSpecialization = IntStream.range(0, specialtiesList.size)
+                .filter { it -> specialtiesList[it] == doctor!!.specialty }
+                .findFirst()
+                .orElse(0)
+
+        specialization_spinner.setSelection(indexOfSpecialization)
+
+        val indexOfClinic = IntStream.range(0, healthClinicList.size)
+                .filter { it -> healthClinicList[it] == doctor!!.healthClinicName + ", " + doctor.healthClinicAddress }
+                .findFirst()
+                .orElse(0)
+
+        health_center_spinner.setSelection(indexOfClinic, true)
 
     }
 
