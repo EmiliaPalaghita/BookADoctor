@@ -24,14 +24,12 @@ class MainActivity : AppCompatActivity() {
     private var database = FirebaseDatabase.getInstance()
     var myRef = database.getReference("appointments")
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var appointmets: MutableList<Appointment> = mutableListOf()
+    private var appointments: MutableList<Appointment> = mutableListOf()
     private var isAlreadyLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-
-//        createDummyData()
 
         profileIB.setOnClickListener { openProfileActivity() }
 
@@ -54,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun retrieveAppointmentsData(user: FirebaseUser) {
+        appointments = mutableListOf()
         myRef.child(user.uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(this@MainActivity, "Failed to load data", Toast.LENGTH_SHORT).show()
@@ -63,17 +62,17 @@ class MainActivity : AppCompatActivity() {
                 for (data in p0.children) {
                     val appointment = data.getValue(Appointment::class.java)
                     if (appointment != null) {
-                        appointmets.add(appointment)
+                        appointments.add(appointment)
                     }
                 }
 
-                val sortedList = ArrayList(appointmets)
+                val sortedList = ArrayList(appointments)
                         .sortedWith(compareByDescending<Appointment> { it.date }
                                 .thenBy { it.time })
 
-                appointmets = mutableListOf(*sortedList.toTypedArray())
+                appointments = mutableListOf(*sortedList.toTypedArray())
 
-                appointmentAdapter = AppointmentAdapter(this@MainActivity, appointmets)
+                appointmentAdapter = AppointmentAdapter(this@MainActivity, appointments)
                 appointmentsListView.adapter = appointmentAdapter
             }
 
@@ -88,36 +87,6 @@ class MainActivity : AppCompatActivity() {
     private fun openProfileActivity() {
         val intent = Intent(applicationContext, ProfileActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun createDummyData() {
-        var appointments: MutableList<Appointment> = mutableListOf()
-        appointments.add(Appointment(time = "15:30"))
-        appointments.add(Appointment(time = "12:30"))
-        appointments.add(Appointment(doctorName = "Dr. George Jmen",
-                date = GregorianCalendar(2017, Calendar.MARCH, 15).time.toString(),
-                time = "12:00",
-                locationName = "Splaiul Indepententei 124, Sector 4",
-                specialty = "Cardiologie"))
-        appointments.add(Appointment(doctorName = "Dr. George Jmen2",
-                date = GregorianCalendar(2017, Calendar.MARCH, 15).time.toString(),
-                time = "12:00",
-                locationName = "Splaiul Indepententei 124, Sector 4",
-                specialty = "Cardiologie"))
-        appointments.add(Appointment(doctorName = "Dr. George Jmen3",
-                date = GregorianCalendar(2017, Calendar.MARCH, 15).time.toString(),
-                time = "12:00",
-                locationName = "Splaiul Indepententei 124, Sector 4",
-                specialty = "Cardiologie"))
-
-        val sortedList = ArrayList(appointments)
-                .sortedWith(compareByDescending<Appointment> { it.date }
-                        .thenBy { it.time })
-
-        appointments = mutableListOf(*sortedList.toTypedArray())
-
-        appointmentAdapter = AppointmentAdapter(this, appointments)
-        appointmentsListView.adapter = appointmentAdapter
     }
 
     override fun onBackPressed() {}
