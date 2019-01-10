@@ -1,16 +1,16 @@
 package com.example.pemil.bookadoctor.Activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
+import com.example.pemil.bookadoctor.Models.Appointment
 import com.example.pemil.bookadoctor.Models.Doctor
 import com.example.pemil.bookadoctor.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -25,11 +25,14 @@ class AppointmentActivity : AppCompatActivity() {
     var specialtiesReference = database.getReference("specialties")
     var doctorsReference = database.getReference("doctors")
     var clinicsReference = database.getReference("health-clinics")
+    var appointmentsDatabase = database.getReference("appointments")
 
     var specialtiesList = mutableListOf<String>()
     var doctorsList = mutableListOf<String>()
     var doctorsMap = mutableMapOf<String, Doctor>()
     var healthClinicList = mutableListOf<String>()
+
+    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     var isDoctorSelected = false
 
@@ -96,12 +99,39 @@ class AppointmentActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
+                if (!isDoctorSelected) {
+                    if (position != 0) {
+                        filterSpinnersForHealthClinic(position)
+                    }
+                }
             }
         }
 
         retrieveDataFromDB()
 
+    }
+
+    private fun filterSpinnersForHealthClinic(position: Int) {
+        val clinicName = healthClinicList[position]
+
+        val selectedDoctors = mutableListOf<String>()
+        selectedDoctors.add(DEFAULT_VALUE)
+        selectedDoctors.addAll(doctorsMap
+                .filter { it.value.healthClinicName + ", " + it.value.healthClinicAddress == clinicName }
+                .values.map { it -> it.fullName }.toMutableList()
+        )
+
+        if (selectedDoctors.size == 1) {
+            updateDoctorsAdapter(mutableListOf(DEFAULT_VALUE))
+        } else {
+            updateDoctorsAdapter(selectedDoctors)
+        }
+
+        val specializations = mutableListOf<String>()
+        specializations.add(DEFAULT_VALUE)
+        specializations.addAll(doctorsMap
+                .filter { it.value.healthClinicName + ", " + it.value.healthClinicAddress == clinicName }
+                .values.map { it -> it.specialty }.toMutableList())
     }
 
     private fun filterSpinnersForDoctor(position: Int) {
@@ -118,9 +148,14 @@ class AppointmentActivity : AppCompatActivity() {
             specialization_spinner.setSelection(indexOfSpecialization)
         }
 
+        val currentClinics = mutableListOf<String>()
 
-        val indexOfClinic = IntStream.range(0, healthClinicList.size)
-                .filter { it -> healthClinicList[it] == doctor!!.healthClinicName + ", " + doctor.healthClinicAddress }
+        for (i in 0 until health_center_spinner.adapter.count) {
+            currentClinics.add(health_center_spinner.adapter.getItem(i) as String)
+        }
+
+        val indexOfClinic = IntStream.range(0, currentClinics.size)
+                .filter { it -> currentClinics[it] == doctor!!.healthClinicName + ", " + doctor.healthClinicAddress }
                 .findFirst()
                 .orElse(0)
 
@@ -179,7 +214,6 @@ class AppointmentActivity : AppCompatActivity() {
         } else {
             updateDoctorsAdapter(selectedDoctors)
         }
-
 
         val selectedClinics = mutableListOf<String>()
         selectedClinics.add(DEFAULT_VALUE)
@@ -255,7 +289,66 @@ class AppointmentActivity : AppCompatActivity() {
     }
 
     private fun saveAppointment() {
-        // TODO
+        if (checkIfInputsEmpty()) {
+            val doctor = doctorsMap[doctor_name_spinner.selectedItem]
+            val appointment = Appointment(mAuth.currentUser!!.uid,
+                    doctor!!.uuid,
+                    doctor.fullName,
+                    doctor.specialty,
+                    date_picker.text.toString(),
+                    time_spinner.selectedItem.toString(),
+                    health_center_spinner.selectedItemPosition,
+                    health_center_spinner.selectedItem.toString(),
+                    "Consult"
+            )
+
+            val id = appointment.hashCode()
+
+            appointmentsDatabase.child(mAuth.currentUser!!.uid).child(id.toString()).setValue(appointment)
+
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setErrorMessageForSpinner(view: TextView) {
+        view.error = ""
+        view.text = "This field can't be empty"
+        view.setTextColor(Color.RED)
+    }
+
+    private fun isEditTextEmpty(editText: EditText): Boolean {
+        val value = editText.text.toString()
+        if (value.isEmpty()) {
+            editText.error = "This field can't be empty"
+            return true
+        }
+        return false
+    }
+
+    private fun checkIfInputsEmpty(): Boolean {
+        var check = true
+        if (specialization_spinner.selectedItem == DEFAULT_VALUE) {
+            val errorText = specialization_spinner.selectedView as TextView
+            setErrorMessageForSpinner(errorText)
+            check = false
+        }
+
+        if (doctor_name_spinner.selectedItem == DEFAULT_VALUE) {
+            val errorText = doctor_name_spinner.selectedView as TextView
+            setErrorMessageForSpinner(errorText)
+            check = false
+        }
+
+        if (health_center_spinner.selectedItem == DEFAULT_VALUE) {
+            val errorText = health_center_spinner.selectedView as TextView
+            setErrorMessageForSpinner(errorText)
+            check = false
+        }
+
+        if (isEditTextEmpty(date_picker)) check = false
+
+        return check
     }
 
     private fun goBackWithoutSaving() {

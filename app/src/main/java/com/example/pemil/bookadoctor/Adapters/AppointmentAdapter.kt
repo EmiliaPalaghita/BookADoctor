@@ -18,11 +18,10 @@ class AppointmentAdapter(context: Context, private val elems: List<Appointment>)
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val rowView = inflater.inflate(R.layout.appointment_item, parent, false)
         val appointment = elems[position]
-        val dateFormat = SimpleDateFormat("dd - MMM - yyyy", Locale.ENGLISH)
 
         return rowView.apply {
             appointmentTypeTextView.text = appointment.appointmentType
-            appointmentDateTextView.text = dateFormat.format(appointment.date)
+            appointmentDateTextView.text = appointment.date
             appointmentTimeTextView.text = appointment.time
             clinicAddressTextView.text = appointment.locationName
             doctorNameTextView.text = appointment.doctorName

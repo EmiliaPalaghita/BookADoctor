@@ -1,7 +1,7 @@
 package com.example.pemil.bookadoctor.Models
 
-data class Appointment(val patientId: Int = 0,
-                       val doctorId: Int = 0,
+data class Appointment(val patientId: String = "",
+                       val doctorId: String = "",
                        val doctorName: String = "",
                        val specialty: String = "",
                        val date: String = "",

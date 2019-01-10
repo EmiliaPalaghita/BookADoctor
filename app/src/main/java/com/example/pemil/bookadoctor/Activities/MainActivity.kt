@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     var myRef = database.getReference("appointments")
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var appointmets: MutableList<Appointment> = mutableListOf()
-
+    private var isAlreadyLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,18 +36,15 @@ class MainActivity : AppCompatActivity() {
         profileIB.setOnClickListener { openProfileActivity() }
 
         (add_appointment as View).setOnClickListener { openNewAppointmentActivity() }
-
-        val currentUser = mAuth.currentUser
-        updateUI(currentUser)
-
-        //TODO - create add appointment
-        //TODO - generate unique ID for each appointment for a patient, so that patient's uid will have a list of id's each representing an appointment
     }
 
     override fun onStart() {
         super.onStart()
-        val currentUser = mAuth.currentUser
-        updateUI(currentUser)
+        if (!isAlreadyLoaded) {
+            val currentUser = mAuth.currentUser
+            updateUI(currentUser)
+            isAlreadyLoaded = true
+        }
     }
 
     private fun updateUI(user: FirebaseUser?) {
