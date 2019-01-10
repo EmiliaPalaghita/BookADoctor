@@ -299,7 +299,8 @@ class AppointmentActivity : AppCompatActivity() {
                     time_spinner.selectedItem.toString(),
                     health_center_spinner.selectedItemPosition,
                     health_center_spinner.selectedItem.toString(),
-                    "Consult"
+                    "Consult",
+                    observations_tv.text.toString()
             )
 
             val id = appointment.hashCode()

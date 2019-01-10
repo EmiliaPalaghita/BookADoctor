@@ -8,4 +8,5 @@ data class Appointment(val patientId: String = "",
                        val time: String = "",
                        val locationId: Int = 1,
                        val locationName: String = "",
-                       val appointmentType: String = "")
+                       val appointmentType: String = "",
+                       val observations: String = "")
