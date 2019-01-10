@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import com.example.pemil.bookadoctor.Models.Doctor
 import com.example.pemil.bookadoctor.R
@@ -32,6 +33,8 @@ class AppointmentActivity : AppCompatActivity() {
 
     var isDoctorSelected = false
 
+    var time = mutableListOf("10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00")
+
     companion object {
         const val DEFAULT_VALUE = "Choose an option"
     }
@@ -51,6 +54,8 @@ class AppointmentActivity : AppCompatActivity() {
         specialtiesList.add(DEFAULT_VALUE)
         doctorsList.add(DEFAULT_VALUE)
         healthClinicList.add(DEFAULT_VALUE)
+
+        specialization_spinner.layoutMode = Spinner.MODE_DROPDOWN
 
         specialization_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -77,10 +82,21 @@ class AppointmentActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position != 0) {
+                isDoctorSelected = if (position != 0) {
                     filterSpinnersForDoctor(position)
-                    isDoctorSelected = true
+                    true
+                } else {
+                    false
                 }
+            }
+        }
+
+        health_center_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
             }
         }
 
@@ -89,6 +105,7 @@ class AppointmentActivity : AppCompatActivity() {
     }
 
     private fun filterSpinnersForDoctor(position: Int) {
+        isDoctorSelected = false
         val doctorName = doctorsList[position]
         val doctor = doctorsMap[doctorName]
 
@@ -97,15 +114,22 @@ class AppointmentActivity : AppCompatActivity() {
                 .findFirst()
                 .orElse(0)
 
-        specialization_spinner.setSelection(indexOfSpecialization)
+        if (specialization_spinner.selectedItemPosition != indexOfSpecialization) {
+            specialization_spinner.setSelection(indexOfSpecialization)
+        }
+
 
         val indexOfClinic = IntStream.range(0, healthClinicList.size)
                 .filter { it -> healthClinicList[it] == doctor!!.healthClinicName + ", " + doctor.healthClinicAddress }
                 .findFirst()
                 .orElse(0)
 
-        health_center_spinner.setSelection(indexOfClinic, true)
+        if (health_center_spinner.selectedItemPosition != indexOfClinic) {
+            health_center_spinner.setSelection(indexOfClinic, true)
 
+        }
+
+        updateTimeAdapter(time)
     }
 
     private fun updateSpecializationAdapter(specList: List<String>) {
@@ -129,6 +153,13 @@ class AppointmentActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateTimeAdapter(timeList: List<String>) {
+        time_spinner.adapter = ArrayAdapter<String>(this@AppointmentActivity,
+                android.R.layout.simple_spinner_item, timeList).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+    }
+
     private fun displayFirebaseError() {
         Toast.makeText(this@AppointmentActivity, "Failed to load data", Toast.LENGTH_LONG).show()
     }
@@ -143,7 +174,12 @@ class AppointmentActivity : AppCompatActivity() {
                 .values.map { it -> it.fullName }.toMutableList()
         )
 
-        updateDoctorsAdapter(selectedDoctors)
+        if (selectedDoctors.size == 1) {
+            updateDoctorsAdapter(mutableListOf(DEFAULT_VALUE))
+        } else {
+            updateDoctorsAdapter(selectedDoctors)
+        }
+
 
         val selectedClinics = mutableListOf<String>()
         selectedClinics.add(DEFAULT_VALUE)
@@ -151,6 +187,8 @@ class AppointmentActivity : AppCompatActivity() {
                 .values.map { it -> it.healthClinicName + ", " + it.healthClinicAddress }.toMutableList())
 
         updateHealthClinicAdapter(selectedClinics)
+
+        updateTimeAdapter(mutableListOf())
     }
 
     private fun openSpecializationDetails() {
