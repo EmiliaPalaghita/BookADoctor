@@ -32,14 +32,51 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.profile_activity)
 
         edit_tv.setOnClickListener {
-            activateEditMode()
             isEditEnabled = !isEditEnabled
+            activateEditMode()
         }
+
+        save_edit_button.setOnClickListener { saveChanges() }
 
         phone_layout.visibility = View.GONE
 
-
         retrieveDataFromDB()
+    }
+
+    private fun saveChanges() {
+        if (isEditEnabled) {
+            if (patient != null) {
+                val newPatient = Patient(user!!.uid,
+                        input_name.text.toString(),
+                        patient!!.birthday,
+                        patient!!.sex,
+                        address.text.toString(),
+                        ssn_et.text.toString(),
+                        series_et.text.toString(),
+                        health_et.text.toString(),
+                        patient!!.username,
+                        email_et.text.toString())
+
+                patientsReference.child(user.uid).setValue(newPatient)
+            } else if (doctor != null) {
+                val healthClinic = health_clinic_address.text.toString().split(", ")
+                val newDoctor = Doctor(user!!.uid,
+                        input_name.text.toString(),
+                        doctor!!.birthday,
+                        doctor!!.sex,
+                        address.text.toString(),
+                        ssn_et.text.toString(),
+                        series_et.text.toString(),
+                        health_et.text.toString(),
+                        doctor!!.username,
+                        email_et.text.toString(),
+                        spec_et.text.toString(),
+                        healthClinic[0],
+                        healthClinic[1])
+
+                doctorsReference.child(user.uid).setValue(newDoctor)
+            }
+        }
     }
 
     private fun modifyEditTextEnabled(view: EditText, isEnabled: Boolean) {
