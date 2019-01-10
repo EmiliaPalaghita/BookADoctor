@@ -1,5 +1,6 @@
 package com.example.pemil.bookadoctor.Activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -38,6 +39,11 @@ class ProfileActivity : AppCompatActivity() {
 
         save_edit_button.setOnClickListener { saveChanges() }
 
+        back_ib.setOnClickListener {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         phone_layout.visibility = View.GONE
 
         retrieveDataFromDB()
@@ -57,6 +63,8 @@ class ProfileActivity : AppCompatActivity() {
                         patient!!.username,
                         email_et.text.toString())
 
+                patient = newPatient
+
                 patientsReference.child(user.uid).setValue(newPatient)
             } else if (doctor != null) {
                 val healthClinic = health_clinic_address.text.toString().split(", ")
@@ -74,8 +82,14 @@ class ProfileActivity : AppCompatActivity() {
                         healthClinic[0],
                         healthClinic[1])
 
+                doctor = newDoctor
+
                 doctorsReference.child(user.uid).setValue(newDoctor)
             }
+
+            Toast.makeText(this@ProfileActivity, "Changes updated successfully!", Toast.LENGTH_SHORT).show()
+            isEditEnabled = false
+            activateEditMode()
         }
     }
 
@@ -102,6 +116,7 @@ class ProfileActivity : AppCompatActivity() {
 
             edit_tv.setText(R.string.cancel)
         } else {
+
             modifyEditTextEnabled(input_name, false)
             modifyEditTextEnabled(address, false)
             modifyEditTextEnabled(email_et, false)
@@ -116,6 +131,9 @@ class ProfileActivity : AppCompatActivity() {
 
             save_edit_button.visibility = View.GONE
             edit_tv.setText(R.string.edit)
+
+            updateUI()
+
         }
 
 
@@ -193,4 +211,5 @@ class ProfileActivity : AppCompatActivity() {
             }
         })
     }
+
 }
