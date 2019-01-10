@@ -25,14 +25,63 @@ class ProfileActivity : AppCompatActivity() {
     private val user = mAuth.currentUser
     var patient: Patient? = null
     var doctor: Doctor? = null
+    var isEditEnabled: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
 
-        retrieveDataFromDB()
+        edit_tv.setOnClickListener {
+            activateEditMode()
+            isEditEnabled = !isEditEnabled
+        }
 
-        updateUI()
+        phone_layout.visibility = View.GONE
+
+
+        retrieveDataFromDB()
+    }
+
+    private fun modifyEditTextEnabled(view: EditText, isEnabled: Boolean) {
+        view.isEnabled = isEnabled
+        view.isFocusableInTouchMode = isEnabled
+    }
+
+    private fun activateEditMode() {
+        if (isEditEnabled) {
+            modifyEditTextEnabled(input_name, true)
+            modifyEditTextEnabled(address, true)
+            modifyEditTextEnabled(email_et, true)
+            modifyEditTextEnabled(ssn_et, true)
+            modifyEditTextEnabled(series_et, true)
+            modifyEditTextEnabled(health_et, true)
+
+            if (doctor != null) {
+                modifyEditTextEnabled(spec_et, true)
+                modifyEditTextEnabled(health_clinic_address, true)
+            }
+
+            save_edit_button.visibility = View.VISIBLE
+
+            edit_tv.setText(R.string.cancel)
+        } else {
+            modifyEditTextEnabled(input_name, false)
+            modifyEditTextEnabled(address, false)
+            modifyEditTextEnabled(email_et, false)
+            modifyEditTextEnabled(ssn_et, false)
+            modifyEditTextEnabled(series_et, false)
+            modifyEditTextEnabled(health_et, false)
+
+            if (doctor != null) {
+                modifyEditTextEnabled(spec_et, false)
+                modifyEditTextEnabled(health_clinic_address, false)
+            }
+
+            save_edit_button.visibility = View.GONE
+            edit_tv.setText(R.string.edit)
+        }
+
+
     }
 
     private fun setEditText(view: EditText, value: String) {
