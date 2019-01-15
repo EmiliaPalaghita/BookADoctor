@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.AdapterView
 import android.widget.Toast
 import com.example.pemil.bookadoctor.Adapters.AppointmentAdapter
 import com.example.pemil.bookadoctor.Models.Appointment
@@ -14,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.appointment_item.view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
 
@@ -33,8 +36,28 @@ class MainActivity : AppCompatActivity() {
 
         profileIB.setOnClickListener { openProfileActivity() }
 
-        (add_appointment as View).setOnClickListener { openNewAppointmentActivity() }
+        (add_appointment as View).setOnClickListener {
+            openNewAppointmentActivity()
+        }
+
+        appointmentsListView.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id ->
+            val animShake = AnimationUtils.loadAnimation(this@MainActivity, R.anim.shake)
+            view.startAnimation(animShake)
+            view.cardTopPart.cancel_button.visibility = View.VISIBLE
+            view.cardTopPart.cancel_button.setOnClickListener { deleteAppointment(view, position) }
+            true
+        }
+
+
     }
+
+    private fun deleteAppointment(view: View?, position: Int) {
+        view?.clearAnimation()
+        view?.cardTopPart?.cancel_button?.visibility = View.GONE
+        // TODO - delete based on position
+        val appointment = appointments[position]
+    }
+
 
     override fun onStart() {
         super.onStart()
