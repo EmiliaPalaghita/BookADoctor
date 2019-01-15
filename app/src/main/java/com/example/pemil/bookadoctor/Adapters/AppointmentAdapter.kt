@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.pemil.bookadoctor.Models.Appointment
 import com.example.pemil.bookadoctor.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.appointment_item.view.*
+import com.google.firebase.database.FirebaseDatabase
 
-class AppointmentAdapter(val context: Context, private val elems: List<Appointment>) : BaseAdapter() {
+
+
+class AppointmentAdapter(context: Context, private val elems: MutableList<Appointment>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -39,24 +43,9 @@ class AppointmentAdapter(val context: Context, private val elems: List<Appointme
     }
 
     private fun updateAppointment(position: Int) {
-
-
-    }
-
-    private fun deleteAppointment(position: Int) {
-        val alertDialog = AlertDialog.Builder(context)
-                .setTitle("Are you sure?")
-                .setMessage("Are you sure you want to cancel your appointment?")
-                .setNegativeButton("No") { _, _ -> }
-                .setPositiveButton("Yes") { _, _ ->
-                    safeDeleteAppointment(position)
-                }.create()
-        alertDialog.show()
-    }
-
-    private fun safeDeleteAppointment(position: Int) {
-
-
+        val ref = FirebaseDatabase.getInstance().reference
+        ref.child("appointments").child(FirebaseAuth.getInstance().uid!!).child(getItemId(position).toString()).removeValue()
+        elems.removeAll(elems)
     }
 
     override fun getItem(position: Int) = elems[position]
