@@ -16,7 +16,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.appointment_item.view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
 
@@ -43,8 +42,10 @@ class MainActivity : AppCompatActivity() {
         appointmentsListView.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id ->
             val animShake = AnimationUtils.loadAnimation(this@MainActivity, R.anim.shake)
             view.startAnimation(animShake)
-            view.cardTopPart.cancel_button.visibility = View.VISIBLE
-            view.cardTopPart.cancel_button.setOnClickListener { deleteAppointment(view, position) }
+//            parent.cancel_button.bringToFront()
+//            parent.cancel_button.invalidate()
+//            parent.cancel_button.visibility = View.VISIBLE
+//            parent.cancel_button.setOnClickListener { deleteAppointment(view, position) }
             true
         }
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteAppointment(view: View?, position: Int) {
         view?.clearAnimation()
-        view?.cardTopPart?.cancel_button?.visibility = View.GONE
+//        view?.cancel_button?.visibility = View.GONE
         // TODO - delete based on position
         val appointment = appointments[position]
     }

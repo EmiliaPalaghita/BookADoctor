@@ -1,178 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        card_view:cardCornerRadius="4dp">
+        android:paddingLeft="10dp">
 
-        <LinearLayout
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Type layout -->
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:paddingBottom="15dp"
-                android:id="@+id/cardTopPart"
-                android:orientation="horizontal"
-                android:background="@drawable/bkg"
-                android:gravity="center_vertical|center">
-
-                <TextView
-                    android:id="@+id/appointmentTypeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/quick_sans_bold"
-                    android:text="@string/consult"
-                    android:textColor="@color/white"
-                    android:textSize="30dp"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/cancel_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_cancel"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"/>
-            </android.support.constraint.ConstraintLayout>
-
-            <!-- Doctor and spec -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp">
-
-                <!-- Doctor name -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/doctorNameTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/quick_sans_bold"
-                        android:paddingEnd="10dp"
-                        android:text="@string/doctor_name"
-                        android:textColor="@color/white"
-                        android:textSize="17sp" />
-                </LinearLayout>
-
-                <!-- Spec -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/medicalSpecialtyTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="33dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/quick_sans_bold"
-                        android:text="@string/medical_specialty"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-                </LinearLayout>
-            </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:longClickable="true"
+            android:paddingStart="10dp"
+            card_view:cardCornerRadius="4dp"
+            card_view:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="10dp">
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp">
 
-                <TextView
-                    android:id="@+id/clinicAddressTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/quick_sans_light"
-                    android:text="@string/location_address"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"/>
+                <!-- Type layout -->
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/cardTopPart"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@drawable/bkg"
+                    android:gravity="center_vertical|center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp">
 
+                    <TextView
+                        android:id="@+id/appointmentTypeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/quick_sans_bold"
+                        android:text="@string/consult"
+                        android:textColor="@color/white"
+                        android:textSize="30dp"
+                        card_view:layout_constraintBottom_toBottomOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toTopOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+
+                <!-- Doctor and spec -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp">
 
-                    <!-- Date -->
+                    <!-- Doctor name -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
                         <TextView
-                            android:id="@+id/appointmentDateTextView"
+                            android:id="@+id/doctorNameTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/date"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/quick_sans_light"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="10dp"/>
+                            android:fontFamily="@font/quick_sans_bold"
+                            android:paddingEnd="10dp"
+                            android:text="@string/doctor_name"
+                            android:textColor="@color/white"
+                            android:textSize="17sp" />
                     </LinearLayout>
 
-                    <!-- Time -->
+                    <!-- Spec -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end">
+                        android:gravity="end"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
 
                         <TextView
-                            android:id="@+id/appointmentTimeTextView"
+                            android:id="@+id/medicalSpecialtyTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="33dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/quick_sans_bold"
+                            android:text="@string/medical_specialty"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/clinicAddressTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/quick_sans_light"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/location_address"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!-- Date -->
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/time"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/quick_sans_light"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"/>
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/appointmentDateTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:fontFamily="@font/quick_sans_light"
+                                android:paddingStart="20dp"
+                                android:paddingEnd="10dp"
+                                android:text="@string/date"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                        <!-- Time -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end">
+
+                            <TextView
+                                android:id="@+id/appointmentTimeTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:fontFamily="@font/quick_sans_light"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:text="@string/time"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+        <!--<ImageButton-->
+            <!--android:id="@+id/cancel_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="388dp"-->
+            <!--android:layout_marginBottom="216dp"-->
+            <!--android:background="@null"-->
+
+            <!--android:src="@drawable/ic_cancel"-->
+            <!--android:translationZ="0dp"-->
+            <!--card_view:layout_constraintBottom_toBottomOf="parent"-->
+            <!--card_view:layout_constraintStart_toStartOf="parent" />-->
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
