@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
             val animShake = AnimationUtils.loadAnimation(this@MainActivity, R.anim.shake)
             view.startAnimation(animShake)
 //            parent.cancel_button.bringToFront()
-//            parent.cancel_button.invalidate()
 //            parent.cancel_button.visibility = View.VISIBLE
 //            parent.cancel_button.setOnClickListener { deleteAppointment(view, position) }
             true
