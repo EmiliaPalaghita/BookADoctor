@@ -59,7 +59,10 @@ class AppointmentActivity : AppCompatActivity() {
         healthClinicList.add(DEFAULT_VALUE)
 
         specialization_spinner.layoutMode = Spinner.MODE_DROPDOWN
-
+        /* TODO: Spinners need custom adapters and custom items. This generates app to crash. I have no idea
+           TODO: how to use this shit. Added custom_spinner_item.xml and SpinnerAdapter.kt
+           TODO: http://www.zoftino.com/android-spinner-custom-adapter-&-layout */
+        // specialization_spinner.adapter = SpinnerAdapter(this, R.layout.custom_spinner_item)
         specialization_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
