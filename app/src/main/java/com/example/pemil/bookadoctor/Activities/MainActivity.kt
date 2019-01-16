@@ -9,7 +9,10 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.Toast
 import com.example.pemil.bookadoctor.Adapters.AppointmentAdapter
+import com.example.pemil.bookadoctor.Adapters.DoctorAppointmentAdapter
 import com.example.pemil.bookadoctor.Models.Appointment
+import com.example.pemil.bookadoctor.Models.Doctor
+import com.example.pemil.bookadoctor.Models.Patient
 import com.example.pemil.bookadoctor.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,12 +26,18 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appointmentAdapter: AppointmentAdapter
-
+    private lateinit var doctorAppointmentAdapter: DoctorAppointmentAdapter
     private var database = FirebaseDatabase.getInstance()
     var myRef = database.getReference("appointments")
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val user = mAuth.currentUser
     private var appointments: MutableList<Appointment> = mutableListOf()
     private var isAlreadyLoaded = false
+    var patient: Patient? = null
+    var doctor: Doctor? = null
+
+    var doctorsReference = database.getReference("doctors")
+    var patientsReference = database.getReference("patients")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +49,8 @@ class MainActivity : AppCompatActivity() {
             openNewAppointmentActivity()
         }
 
+        retrieveDataFromDB()
+
         appointmentsListView.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id ->
             val animShake = AnimationUtils.loadAnimation(this@MainActivity, R.anim.shake)
             view.startAnimation(animShake)
@@ -47,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             val alertDialog = AlertDialog.Builder(this@MainActivity)
                     .setTitle("Delete appointment")
                     .setMessage("Do you really want to delete the appointment?")
-                    .setNegativeButton("No") { _, _ -> view?.clearAnimation()}
+                    .setNegativeButton("No") { _, _ -> view?.clearAnimation() }
                     .setPositiveButton("Yes") { _, _ ->
                         deleteAppointment(view, position)
                     }.create()
@@ -55,7 +66,42 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+    }
 
+    private fun retrieveDataFromDB() {
+        doctorsReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                displayFirebaseError()
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for (data in p0.children) {
+                    if (data.key == user!!.uid) {
+                        doctor = data.getValue(Doctor::class.java)!!
+                    }
+                }
+
+            }
+        })
+
+        patientsReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                displayFirebaseError()
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for (data in p0.children) {
+                    if (data.key == user!!.uid) {
+                        patient = data.getValue(Patient::class.java)!!
+                    }
+                }
+            }
+        })
+
+    }
+
+    private fun displayFirebaseError() {
+        Toast.makeText(this@MainActivity, "Failed to load data", Toast.LENGTH_SHORT).show()
     }
 
     private fun deleteAppointment(view: View?, position: Int) {
@@ -70,8 +116,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (!isAlreadyLoaded) {
-            val currentUser = mAuth.currentUser
-            updateUI(currentUser)
+            updateUI(user)
             isAlreadyLoaded = true
         }
     }
@@ -86,7 +131,7 @@ class MainActivity : AppCompatActivity() {
         appointments = mutableListOf()
         myRef.child(user.uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(this@MainActivity, "Failed to load data", Toast.LENGTH_SHORT).show()
+                displayFirebaseError()
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -103,8 +148,15 @@ class MainActivity : AppCompatActivity() {
 
                 appointments = mutableListOf(*sortedList.toTypedArray())
 
-                appointmentAdapter = AppointmentAdapter(this@MainActivity, appointments)
-                appointmentsListView.adapter = appointmentAdapter
+                if (patient != null) {
+                    appointmentAdapter = AppointmentAdapter(this@MainActivity, appointments)
+                    appointmentsListView.adapter = appointmentAdapter
+                } else if (doctor != null) {
+                    doctorAppointmentAdapter = DoctorAppointmentAdapter(this@MainActivity, appointments)
+                    appointmentsListView.adapter = doctorAppointmentAdapter
+                }
+
+
             }
 
         })
