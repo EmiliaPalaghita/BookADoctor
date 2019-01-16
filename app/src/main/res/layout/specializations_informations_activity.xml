@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/nav_bar"
         android:id="@+id/items">
         <ListView
-            android:id="@+id/appointmentsListView"
+            android:id="@+id/specializationListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
