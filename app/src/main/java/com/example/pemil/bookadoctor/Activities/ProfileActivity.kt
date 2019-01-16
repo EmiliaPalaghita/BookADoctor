@@ -1,5 +1,6 @@
 package com.example.pemil.bookadoctor.Activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -37,7 +38,15 @@ class ProfileActivity : AppCompatActivity() {
             activateEditMode()
         }
 
-        save_edit_button.setOnClickListener { saveChanges() }
+        save_edit_button.visibility = View.VISIBLE
+        save_edit_button.text = "Logout"
+
+        save_edit_button.setOnClickListener {
+            if (isEditEnabled)
+                saveChanges()
+            else
+                logout()
+        }
 
         back_ib.setOnClickListener {
             val intent = Intent(applicationContext, MainActivity::class.java)
@@ -47,6 +56,21 @@ class ProfileActivity : AppCompatActivity() {
         phone_layout.visibility = View.GONE
 
         retrieveDataFromDB()
+    }
+
+    private fun logout() {
+
+        val alertDialog = AlertDialog.Builder(this@ProfileActivity)
+                .setTitle("Log out from your account")
+                .setMessage("Are you sure you want to log out from your account??")
+                .setNegativeButton("No") { _, _ -> }
+                .setPositiveButton("Yes") { _, _ ->
+                    mAuth.signOut()
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                    startActivity(intent)
+                }.create()
+        alertDialog.show()
+
     }
 
     private fun saveChanges() {
@@ -112,7 +136,8 @@ class ProfileActivity : AppCompatActivity() {
                 modifyEditTextEnabled(health_clinic_address, true)
             }
 
-            save_edit_button.visibility = View.VISIBLE
+//            save_edit_button.visibility = View.VISIBLE
+            save_edit_button.text = "Save"
 
             edit_tv.setText(R.string.cancel)
         } else {
@@ -129,7 +154,8 @@ class ProfileActivity : AppCompatActivity() {
                 modifyEditTextEnabled(health_clinic_address, false)
             }
 
-            save_edit_button.visibility = View.GONE
+//            save_edit_button.visibility = View.GONE
+            save_edit_button.text = "Logout"
             edit_tv.setText(R.string.edit)
 
             updateUI()
@@ -202,7 +228,7 @@ class ProfileActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 for (data in p0.children) {
-                    if (data.value == user!!.uid) {
+                    if (data.key == user!!.uid) {
                         patient = data.getValue(Patient::class.java)!!
                     }
                 }
