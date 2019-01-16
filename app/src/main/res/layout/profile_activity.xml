@@ -404,6 +404,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="40dp"
                         android:text="@string/save"
                         android:fontFamily="@font/quick_sans_bold"
                         android:background="@color/colorAccent"

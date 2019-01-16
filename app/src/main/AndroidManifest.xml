@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -18,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SignUpActivity" />
-        <activity android:name=".Activities.AppointmentActivity" />
+        <activity android:name=".Activities.SignUpActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".Activities.AppointmentActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activities.ProfileActivity" />
         <activity android:name=".Activities.SpecializationActivity"/>
     </application>
