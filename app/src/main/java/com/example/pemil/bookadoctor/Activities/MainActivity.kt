@@ -1,5 +1,6 @@
 package com.example.pemil.bookadoctor.Activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -42,9 +43,15 @@ class MainActivity : AppCompatActivity() {
         appointmentsListView.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id ->
             val animShake = AnimationUtils.loadAnimation(this@MainActivity, R.anim.shake)
             view.startAnimation(animShake)
-//            parent.cancel_button.bringToFront()
-//            parent.cancel_button.visibility = View.VISIBLE
-//            parent.cancel_button.setOnClickListener { deleteAppointment(view, position) }
+
+            val alertDialog = AlertDialog.Builder(this@MainActivity)
+                    .setTitle("Delete appointment")
+                    .setMessage("Do you really want to delete the appointment?")
+                    .setNegativeButton("No") { _, _ -> view?.clearAnimation()}
+                    .setPositiveButton("Yes") { _, _ ->
+                        deleteAppointment(view, position)
+                    }.create()
+            alertDialog.show()
             true
         }
 
@@ -53,9 +60,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteAppointment(view: View?, position: Int) {
         view?.clearAnimation()
-//        view?.cancel_button?.visibility = View.GONE
-        // TODO - delete based on position
         val appointment = appointments[position]
+
+        myRef.child(FirebaseAuth.getInstance().uid!!).child(appointment.hashCode().toString()).removeValue()
+        appointments = mutableListOf()
     }
 
 
